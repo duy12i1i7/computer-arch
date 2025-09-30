@@ -1,9 +1,9 @@
-#Bài 1 (10đ)
+# Bài 1 (10đ)
 
 PC hiện tại: 0x2004FFF0
 Đích muốn nhảy: 0x10002000
 
-##1) Có dùng j để nhảy trực tiếp được không?
+## 1) Có dùng j để nhảy trực tiếp được không?
 
 Không.
 Lệnh j target của MIPS chỉ mang 26 bit chỉ số lệnh (instr_index). Khi thực thi, địa chỉ đích được ghép như sau:
@@ -13,7 +13,7 @@ target_addr = { (PC+4)[31:28],  instr_index[25:0],  2'b00 }
 Nghĩa là 4 bit cao của PC+4 (ở đây (PC+4)=0x2004FFF4 ⇒ 4 bit cao = 0x2) bị “ép” sang địa chỉ đích.
 Địa chỉ cần nhảy có 4 bit cao = 0x1 (vì 0x1000_2000), không trùng 0x2, nên j không thể nhảy trực tiếp.
 
-##2) Cách khác để nhảy tới 0x10002000
+## 2) Cách khác để nhảy tới 0x10002000
 
 Dùng thanh ghi + jr (hoặc jalr). Ví dụ:
 
@@ -24,7 +24,7 @@ nop
 
 (hoặc jalr $ra, $t0 nếu muốn lưu $ra).
 
-##3) Khoảng địa chỉ tối đa nhảy được bằng một lệnh j từ PC này
+## 3) Khoảng địa chỉ tối đa nhảy được bằng một lệnh j từ PC này
 
 Vì 4 bit cao bị khóa là 0x2, nên có thể nhảy tới mọi địa chỉ word-aligned trong dải:
 
@@ -36,9 +36,10 @@ Kết thúc: 0x2FFF_FFFC (thực tế các địa chỉ lệnh đều bội số
 
 ---
 
-#Bài 2 (20đ)
+# Bài 2 (20đ)
 
-Yêu cầu: hàm nhận 8 tham số, trả 3 giá trị, tiết kiệm stack, “không bắt buộc” theo chuẩn caller/callee (nhưng vẫn quản lý bộ nhớ gọn gàng).
+## Yêu cầu:
+Hàm nhận 8 tham số, trả 3 giá trị, tiết kiệm stack, “không bắt buộc” theo chuẩn caller/callee (nhưng vẫn quản lý bộ nhớ gọn gàng).
 Mình sẽ:
 
 Truyền 4 tham số đầu qua $a0..$a3.
@@ -50,7 +51,7 @@ Callee tạo frame nhỏ (chỉ lưu $ra), đọc 4 arg bổ sung từ stack c�
 Trả 3 kết quả qua $v0, $v1 và $t0 (không chuẩn MIPS, nhưng đề cho phép).
 
 
-Chương trình mẫu
+## Chương trình mẫu
 ```
 ########################################################
 # Bài 2: 8 tham số, trả 3 giá trị với stack tối thiểu
@@ -157,9 +158,9 @@ RET_BUF: .space 12   # chỗ lưu 3 kết quả
 
 ---
 
-#Bài 3 (20đ)
+# Bài 3 (20đ)
 
-Cho code vi phạm quy ước caller/callee. Mục tiêu: giữ nguyên chức năng tính toán nhưng bảo toàn đúng quy ước:
+## Cho code vi phạm quy ước caller/callee. Mục tiêu: giữ nguyên chức năng tính toán nhưng bảo toàn đúng quy ước:
 
 $s*: callee-saved → hàm phải lưu/phục hồi nếu dùng/sửa.
 
@@ -168,7 +169,7 @@ $t*: caller-saved → caller phải lưu nếu cần dùng giá trị cũ sau l�
 $ra: callee phải lưu nếu có lời gọi lồng; ở đây có một cấp nên vẫn nên lưu cho chuẩn.
 
 
-Phiên bản đã chỉnh
+## Phiên bản đã chỉnh
 ```
 .text
         .globl main
@@ -249,9 +250,9 @@ Vì sao đúng quy ước?
 
 ---
 
-#Bài 4 (50đ) – Fibonacci đệ quy
+# Bài 4 (50đ) – Fibonacci đệ quy
 
-Yêu cầu:
+## Yêu cầu:
 
 Tuân thủ quy ước MIPS (caller/callee, stack frame).
 
@@ -260,7 +261,7 @@ main gọi fib(6), kết quả mong đợi 8 (F(6)=8).
 Hiển thị hoặc lưu kết quả.
 
 
-Lời giải hoàn chỉnh
+## Lời giải hoàn chỉnh
 ```
 ##############################
 # Bài 4: Fibonacci đệ quy
